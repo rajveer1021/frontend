@@ -31,7 +31,6 @@ import {
   Delete as DeleteIcon,
 } from "@mui/icons-material";
 import { useAuth } from "../../context/AuthContext";
-import PageWrapper from "../../components/layout/PageWrapper"; // New PageWrapper
 
 const Products = () => {
   const { user } = useAuth();
@@ -170,392 +169,390 @@ const Products = () => {
   };
 
   return (
-    <PageWrapper
-      title="Dashboard"
-      subtitle="Welcome back! Here's what's happening with your marketplace today."
-      spacing={3}
-    >
-      {" "}
-      <Box sx={{ width: "100%" }}>
-        {/* Page Header */}
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: { xs: "flex-start", sm: "center" },
-            mb: 4,
-            flexDirection: { xs: "column", sm: "row" },
-            gap: { xs: 2, sm: 0 },
-          }}
-        >
-          <Box>
-            <Typography
-              variant="h4"
-              sx={{
-                fontWeight: 700,
-                color: "#1A1A1A",
-                fontSize: { xs: "1.5rem", sm: "2rem" },
-                mb: 0.5,
-              }}
-            >
-              Product Management
-            </Typography>
-            <Typography
-              variant="body1"
-              sx={{
-                color: "#666",
-                fontSize: "1rem",
-              }}
-            >
-              Manage your product catalog
-            </Typography>
-          </Box>
-
-          <Button
-            variant="contained"
-            startIcon={<AddIcon />}
-            onClick={handleAddProduct}
+    <Box sx={{ 
+      flexGrow: 1, 
+      p: { xs: 2, sm: 3 },
+      minHeight: 'calc(100vh - 70px)', // Account for header height
+      bgcolor: '#f5f5f5'
+    }}>
+      {/* Page Header */}
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: { xs: "flex-start", sm: "center" },
+          mb: 4,
+          flexDirection: { xs: "column", sm: "row" },
+          gap: { xs: 2, sm: 0 },
+        }}
+      >
+        <Box>
+          <Typography
+            variant="h4"
             sx={{
-              bgcolor: "#1A1A1A",
-              color: "white",
-              fontWeight: 600,
-              px: 3,
-              py: 1.5,
-              borderRadius: 2,
-              textTransform: "none",
-              "&:hover": {
-                bgcolor: "#333",
-              },
-              width: { xs: "100%", sm: "auto" },
+              fontWeight: 700,
+              color: "#1A1A1A",
+              fontSize: { xs: "1.5rem", sm: "2rem" },
+              mb: 0.5,
             }}
           >
-            Add Product
-          </Button>
+            Product Management
+          </Typography>
+          <Typography
+            variant="body1"
+            sx={{
+              color: "#666",
+              fontSize: "1rem",
+            }}
+          >
+            Manage your product catalog
+          </Typography>
         </Box>
 
-        {/* Search and Filter Bar */}
-        <Box
+        <Button
+          variant="contained"
+          startIcon={<AddIcon />}
+          onClick={handleAddProduct}
           sx={{
-            display: "flex",
-            gap: 2,
-            mb: 4,
-            flexDirection: { xs: "column", md: "row" },
-            alignItems: { xs: "stretch", md: "center" },
+            bgcolor: "#2196f3",
+            color: "white",
+            fontWeight: 600,
+            px: 3,
+            py: 1.5,
+            borderRadius: 2,
+            textTransform: "none",
+            "&:hover": {
+              bgcolor: "#1976d2",
+            },
+            width: { xs: "100%", sm: "auto" },
           }}
         >
-          {/* Search */}
-          <TextField
-            placeholder="Search products..."
-            value={searchQuery}
-            onChange={handleSearchChange}
-            variant="outlined"
-            size="small"
+          Add Product
+        </Button>
+      </Box>
+
+      {/* Search and Filter Bar */}
+      <Box
+        sx={{
+          display: "flex",
+          gap: 2,
+          mb: 4,
+          flexDirection: { xs: "column", md: "row" },
+          alignItems: { xs: "stretch", md: "center" },
+        }}
+      >
+        {/* Search */}
+        <TextField
+          placeholder="Search products..."
+          value={searchQuery}
+          onChange={handleSearchChange}
+          variant="outlined"
+          size="small"
+          sx={{
+            bgcolor: "white",
+            borderRadius: 1,
+            minWidth: { xs: "100%", md: "300px" },
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": {
+                borderColor: "#E0E0E0",
+              },
+              "&:hover fieldset": {
+                borderColor: "#2196f3",
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "#2196f3",
+              },
+            },
+          }}
+          InputProps={{
+            startAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon sx={{ color: "#999", fontSize: 20 }} />
+              </InputAdornment>
+            ),
+          }}
+        />
+
+        {/* Filter by Category */}
+        <FormControl size="small" sx={{ minWidth: { xs: "100%", md: 200 } }}>
+          <Select
+            value={categoryFilter}
+            onChange={(e) => setCategoryFilter(e.target.value)}
+            displayEmpty
             sx={{
               bgcolor: "white",
-              borderRadius: 1,
-              minWidth: { xs: "100%", md: "300px" },
-              "& .MuiOutlinedInput-root": {
-                "& fieldset": {
-                  borderColor: "#E0E0E0",
-                },
-                "&:hover fieldset": {
-                  borderColor: "#B0B0B0",
-                },
-                "&.Mui-focused fieldset": {
-                  borderColor: "#4285F4",
-                },
+              "& .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#E0E0E0",
+              },
+              "&:hover .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#2196f3",
+              },
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#2196f3",
               },
             }}
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchIcon sx={{ color: "#999", fontSize: 20 }} />
-                </InputAdornment>
-              ),
+            startAdornment={
+              <FilterIcon sx={{ color: "#999", fontSize: 18, mr: 1 }} />
+            }
+          >
+            <MenuItem value="">Filter by category</MenuItem>
+            <MenuItem value="electronics">Electronics</MenuItem>
+            <MenuItem value="infrastructure">Infrastructure</MenuItem>
+            <MenuItem value="iot">IoT</MenuItem>
+          </Select>
+        </FormControl>
+
+        {/* Sort */}
+        <FormControl size="small" sx={{ minWidth: { xs: "100%", md: 150 } }}>
+          <Select
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value)}
+            sx={{
+              bgcolor: "white",
+              "& .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#E0E0E0",
+              },
+              "&:hover .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#2196f3",
+              },
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#2196f3",
+              },
             }}
-          />
+          >
+            <MenuItem value="newest">Newest First</MenuItem>
+            <MenuItem value="oldest">Oldest First</MenuItem>
+            <MenuItem value="price-low">Price: Low to High</MenuItem>
+            <MenuItem value="price-high">Price: High to Low</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
 
-          {/* Filter by Category */}
-          <FormControl size="small" sx={{ minWidth: { xs: "100%", md: 200 } }}>
-            <Select
-              value={categoryFilter}
-              onChange={(e) => setCategoryFilter(e.target.value)}
-              displayEmpty
-              sx={{
-                bgcolor: "white",
-                "& .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "#E0E0E0",
-                },
-                "&:hover .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "#B0B0B0",
-                },
-                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "#4285F4",
-                },
-              }}
-              startAdornment={
-                <FilterIcon sx={{ color: "#999", fontSize: 18, mr: 1 }} />
-              }
-            >
-              <MenuItem value="">Filter by category</MenuItem>
-              <MenuItem value="electronics">Electronics</MenuItem>
-              <MenuItem value="infrastructure">Infrastructure</MenuItem>
-              <MenuItem value="iot">IoT</MenuItem>
-            </Select>
-          </FormControl>
-
-          {/* Sort */}
-          <FormControl size="small" sx={{ minWidth: { xs: "100%", md: 150 } }}>
-            <Select
-              value={sortOrder}
-              onChange={(e) => setSortOrder(e.target.value)}
-              sx={{
-                bgcolor: "white",
-                "& .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "#E0E0E0",
-                },
-                "&:hover .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "#B0B0B0",
-                },
-                "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                  borderColor: "#4285F4",
-                },
-              }}
-            >
-              <MenuItem value="newest">Newest First</MenuItem>
-              <MenuItem value="oldest">Oldest First</MenuItem>
-              <MenuItem value="price-low">Price: Low to High</MenuItem>
-              <MenuItem value="price-high">Price: High to Low</MenuItem>
-            </Select>
-          </FormControl>
-        </Box>
-
-        {/* Products Table */}
-        <TableContainer
-          component={Paper}
-          sx={{
-            borderRadius: 2,
-            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
-            border: "1px solid #E0E0E0",
-          }}
-        >
-          <Table>
-            <TableHead>
-              <TableRow sx={{ bgcolor: "#FAFAFA" }}>
-                <TableCell
-                  sx={{
-                    color: "#666",
-                    fontWeight: 600,
-                    fontSize: "0.875rem",
-                    py: 2,
-                    px: 3,
-                  }}
-                >
-                  Product
-                </TableCell>
-                <TableCell
-                  sx={{
-                    color: "#666",
-                    fontWeight: 600,
-                    fontSize: "0.875rem",
-                    py: 2,
-                    px: 3,
-                  }}
-                >
-                  Categories
-                </TableCell>
-                <TableCell
-                  sx={{
-                    color: "#666",
-                    fontWeight: 600,
-                    fontSize: "0.875rem",
-                    py: 2,
-                    px: 3,
-                  }}
-                >
-                  Price
-                </TableCell>
-                <TableCell
-                  sx={{
-                    color: "#666",
-                    fontWeight: 600,
-                    fontSize: "0.875rem",
-                    py: 2,
-                    px: 3,
-                  }}
-                >
-                  Stock Status
-                </TableCell>
-                <TableCell
-                  sx={{
-                    color: "#666",
-                    fontWeight: 600,
-                    fontSize: "0.875rem",
-                    py: 2,
-                    px: 3,
-                  }}
-                >
-                  Upload Date
-                </TableCell>
-                <TableCell
-                  sx={{
-                    color: "#666",
-                    fontWeight: 600,
-                    fontSize: "0.875rem",
-                    py: 2,
-                    px: 3,
-                    textAlign: "center",
-                  }}
-                >
-                  Actions
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {productsData.map((product) => (
-                <TableRow
-                  key={product.id}
-                  sx={{
-                    "&:hover": {
-                      bgcolor: "#F8F9FA",
-                    },
-                    "&:last-child td": {
-                      borderBottom: 0,
-                    },
-                  }}
-                >
-                  {/* Product */}
-                  <TableCell sx={{ py: 3, px: 3 }}>
-                    <Box>
-                      <Typography
-                        variant="subtitle1"
-                        sx={{
-                          fontWeight: 600,
-                          color: "#1A1A1A",
-                          fontSize: "0.95rem",
-                          mb: 0.5,
-                        }}
-                      >
-                        {product.name}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        sx={{
-                          color: "#666",
-                          fontSize: "0.8rem",
-                        }}
-                      >
-                        {product.description}
-                      </Typography>
-                    </Box>
-                  </TableCell>
-
-                  {/* Categories */}
-                  <TableCell sx={{ py: 3, px: 3 }}>
-                    <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
-                      {product.categories.map((category, index) => (
-                        <Chip
-                          key={index}
-                          label={category}
-                          size="small"
-                          sx={{
-                            bgcolor: "#E3F2FD",
-                            color: "#1976D2",
-                            fontWeight: 500,
-                            fontSize: "0.75rem",
-                            height: 22,
-                            borderRadius: "11px",
-                          }}
-                        />
-                      ))}
-                    </Box>
-                  </TableCell>
-
-                  {/* Price */}
-                  <TableCell sx={{ py: 3, px: 3 }}>
+      {/* Products Table */}
+      <TableContainer
+        component={Paper}
+        sx={{
+          borderRadius: 2,
+          boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
+          border: "1px solid #E0E0E0",
+        }}
+      >
+        <Table>
+          <TableHead>
+            <TableRow sx={{ bgcolor: "#FAFAFA" }}>
+              <TableCell
+                sx={{
+                  color: "#666",
+                  fontWeight: 600,
+                  fontSize: "0.875rem",
+                  py: 2,
+                  px: 3,
+                }}
+              >
+                Product
+              </TableCell>
+              <TableCell
+                sx={{
+                  color: "#666",
+                  fontWeight: 600,
+                  fontSize: "0.875rem",
+                  py: 2,
+                  px: 3,
+                }}
+              >
+                Categories
+              </TableCell>
+              <TableCell
+                sx={{
+                  color: "#666",
+                  fontWeight: 600,
+                  fontSize: "0.875rem",
+                  py: 2,
+                  px: 3,
+                }}
+              >
+                Price
+              </TableCell>
+              <TableCell
+                sx={{
+                  color: "#666",
+                  fontWeight: 600,
+                  fontSize: "0.875rem",
+                  py: 2,
+                  px: 3,
+                }}
+              >
+                Stock Status
+              </TableCell>
+              <TableCell
+                sx={{
+                  color: "#666",
+                  fontWeight: 600,
+                  fontSize: "0.875rem",
+                  py: 2,
+                  px: 3,
+                }}
+              >
+                Upload Date
+              </TableCell>
+              <TableCell
+                sx={{
+                  color: "#666",
+                  fontWeight: 600,
+                  fontSize: "0.875rem",
+                  py: 2,
+                  px: 3,
+                  textAlign: "center",
+                }}
+              >
+                Actions
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {productsData.map((product) => (
+              <TableRow
+                key={product.id}
+                sx={{
+                  "&:hover": {
+                    bgcolor: "#F8F9FA",
+                  },
+                  "&:last-child td": {
+                    borderBottom: 0,
+                  },
+                }}
+              >
+                {/* Product */}
+                <TableCell sx={{ py: 3, px: 3 }}>
+                  <Box>
                     <Typography
                       variant="subtitle1"
                       sx={{
                         fontWeight: 600,
                         color: "#1A1A1A",
                         fontSize: "0.95rem",
+                        mb: 0.5,
                       }}
                     >
-                      {formatCurrency(product.price)}
+                      {product.name}
                     </Typography>
-                  </TableCell>
-
-                  {/* Stock Status */}
-                  <TableCell sx={{ py: 3, px: 3 }}>
-                    {getStockStatusChip(product.stockStatus)}
-                  </TableCell>
-
-                  {/* Upload Date */}
-                  <TableCell sx={{ py: 3, px: 3 }}>
                     <Typography
                       variant="body2"
                       sx={{
                         color: "#666",
-                        fontSize: "0.875rem",
+                        fontSize: "0.8rem",
                       }}
                     >
-                      {product.uploadDate}
+                      {product.description}
                     </Typography>
-                  </TableCell>
+                  </Box>
+                </TableCell>
 
-                  {/* Actions */}
-                  <TableCell sx={{ py: 3, px: 3, textAlign: "center" }}>
-                    <Box
-                      sx={{ display: "flex", gap: 1, justifyContent: "center" }}
+                {/* Categories */}
+                <TableCell sx={{ py: 3, px: 3 }}>
+                  <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
+                    {product.categories.map((category, index) => (
+                      <Chip
+                        key={index}
+                        label={category}
+                        size="small"
+                        sx={{
+                          bgcolor: "#E3F2FD",
+                          color: "#1976D2",
+                          fontWeight: 500,
+                          fontSize: "0.75rem",
+                          height: 22,
+                          borderRadius: "11px",
+                        }}
+                      />
+                    ))}
+                  </Box>
+                </TableCell>
+
+                {/* Price */}
+                <TableCell sx={{ py: 3, px: 3 }}>
+                  <Typography
+                    variant="subtitle1"
+                    sx={{
+                      fontWeight: 600,
+                      color: "#1A1A1A",
+                      fontSize: "0.95rem",
+                    }}
+                  >
+                    {formatCurrency(product.price)}
+                  </Typography>
+                </TableCell>
+
+                {/* Stock Status */}
+                <TableCell sx={{ py: 3, px: 3 }}>
+                  {getStockStatusChip(product.stockStatus)}
+                </TableCell>
+
+                {/* Upload Date */}
+                <TableCell sx={{ py: 3, px: 3 }}>
+                  <Typography
+                    variant="body2"
+                    sx={{
+                      color: "#666",
+                      fontSize: "0.875rem",
+                    }}
+                  >
+                    {product.uploadDate}
+                  </Typography>
+                </TableCell>
+
+                {/* Actions */}
+                <TableCell sx={{ py: 3, px: 3, textAlign: "center" }}>
+                  <Box
+                    sx={{ display: "flex", gap: 1, justifyContent: "center" }}
+                  >
+                    <IconButton
+                      size="small"
+                      onClick={() => handleViewProduct(product.id)}
+                      sx={{
+                        color: "#666",
+                        "&:hover": {
+                          color: "#2196f3",
+                          bgcolor: "rgba(33, 150, 243, 0.1)",
+                        },
+                      }}
                     >
-                      <IconButton
-                        size="small"
-                        onClick={() => handleViewProduct(product.id)}
-                        sx={{
-                          color: "#666",
-                          "&:hover": {
-                            color: "#4285F4",
-                            bgcolor: "rgba(66, 133, 244, 0.1)",
-                          },
-                        }}
-                      >
-                        <ViewIcon fontSize="small" />
-                      </IconButton>
-                      <IconButton
-                        size="small"
-                        onClick={() => handleEditProduct(product.id)}
-                        sx={{
-                          color: "#666",
-                          "&:hover": {
-                            color: "#FF9800",
-                            bgcolor: "rgba(255, 152, 0, 0.1)",
-                          },
-                        }}
-                      >
-                        <EditIcon fontSize="small" />
-                      </IconButton>
-                      <IconButton
-                        size="small"
-                        onClick={() => handleDeleteProduct(product.id)}
-                        sx={{
-                          color: "#666",
-                          "&:hover": {
-                            color: "#F44336",
-                            bgcolor: "rgba(244, 67, 54, 0.1)",
-                          },
-                        }}
-                      >
-                        <DeleteIcon fontSize="small" />
-                      </IconButton>
-                    </Box>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Box>
-    </PageWrapper>
+                      <ViewIcon fontSize="small" />
+                    </IconButton>
+                    <IconButton
+                      size="small"
+                      onClick={() => handleEditProduct(product.id)}
+                      sx={{
+                        color: "#666",
+                        "&:hover": {
+                          color: "#FF9800",
+                          bgcolor: "rgba(255, 152, 0, 0.1)",
+                        },
+                      }}
+                    >
+                      <EditIcon fontSize="small" />
+                    </IconButton>
+                    <IconButton
+                      size="small"
+                      onClick={() => handleDeleteProduct(product.id)}
+                      sx={{
+                        color: "#666",
+                        "&:hover": {
+                          color: "#F44336",
+                          bgcolor: "rgba(244, 67, 54, 0.1)",
+                        },
+                      }}
+                    >
+                      <DeleteIcon fontSize="small" />
+                    </IconButton>
+                  </Box>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>
   );
 };
 

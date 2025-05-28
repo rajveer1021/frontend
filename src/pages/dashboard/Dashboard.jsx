@@ -1,625 +1,657 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Grid,
   Card,
-  CardHeader,
   CardContent,
   Typography,
   Avatar,
   IconButton,
   Chip,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  LinearProgress,
-  useTheme,
-  useMediaQuery,
-  Divider,
-  Button,
   List,
   ListItem,
   ListItemAvatar,
   ListItemText,
   ListItemSecondaryAction,
-} from '@mui/material';
+  useTheme,
+  useMediaQuery,
+  Button,
+  Stack,
+} from "@mui/material";
 import {
-  LocalMall as EarningIcon,
-  MonetizationOn as MoneyIcon,
-  AccountBalanceWallet as AccountIcon,
-  StorefrontTwoTone as MarketIcon,
-  MoreHoriz as MoreHorizIcon,
-  ArrowUpward as ArrowUpwardIcon,
-  ArrowDownward as ArrowDownwardIcon,
-  KeyboardArrowUp as KeyboardArrowUpIcon,
-  KeyboardArrowDown as KeyboardArrowDownIcon,
-  TrendingUp as TrendingUpIcon,
+  LocalMall as ShoppingBagIcon,
   Description as DescriptionIcon,
-  CalendarToday as CalendarIcon,
-} from '@mui/icons-material';
+  TrendingUp as TrendingUpIcon,
+  TrendingDown as TrendingDownIcon,
+  MoreHoriz as MoreHorizIcon,
+} from "@mui/icons-material";
 
-// Berry Color Palette
-const berryTheme = {
+// Berry Colors matching the exact template
+const berryColors = {
   primary: {
-    light: '#e3f2fd',
-    main: '#2196f3',
-    dark: '#0d47a1',
+    light: "#e3f2fd",
+    main: "#2196f3",
+    dark: "#0d47a1",
   },
-  secondary: {
-    light: '#f3e5f5',
-    main: '#9c27b0',
-    dark: '#4a148c',
+  purple: {
+    light: "#f3e5f5",
+    main: "#673ab7",
+    dark: "#4a148c",
+  },
+  orange: {
+    light: "#fff3e0",
+    main: "#ff9800",
+    dark: "#e65100",
   },
   success: {
-    light: '#e8f5e8',
-    main: '#4caf50',
-    dark: '#1b5e20',
+    light: "#e8f5e8",
+    main: "#4caf50",
+    dark: "#1b5e20",
   },
   error: {
-    light: '#ffebee',
-    main: '#f44336',
-    dark: '#b71c1c',
-  },
-  warning: {
-    light: '#fff8e1',
-    main: '#ff9800',
-    dark: '#e65100',
+    light: "#ffebee",
+    main: "#f44336",
+    dark: "#b71c1c",
   },
   grey: {
-    50: '#fafafa',
-    100: '#f5f5f5',
-    200: '#eeeeee',
-    300: '#e0e0e0',
-    400: '#bdbdbd',
-    500: '#9e9e9e',
-    600: '#757575',
-    700: '#616161',
-    800: '#424242',
-    900: '#212121',
+    50: "#fafafa",
+    100: "#f5f5f5",
+    200: "#eeeeee",
+    300: "#e0e0e0",
+    500: "#9e9e9e",
+    600: "#757575",
+    700: "#616161",
   },
 };
 
-// Earning Card Component (Berry Style)
-const EarningCard = () => {
+// Total Earning Card (Purple Gradient - Exact Berry Style)
+const TotalEarningCard = () => {
   return (
     <Card
       sx={{
-        bgcolor: berryTheme.primary.main,
-        color: 'white',
-        overflow: 'hidden',
-        position: 'relative',
-        '&:after': {
+        background: "linear-gradient(45deg, #673ab7 30%, #9c27b0 90%)",
+        color: "white",
+        overflow: "hidden",
+        position: "relative",
+        "&:after": {
           content: '""',
-          position: 'absolute',
+          position: "absolute",
           width: 210,
           height: 210,
-          background: `linear-gradient(210.04deg, ${berryTheme.primary.dark} -50.94%, rgba(144, 202, 249, 0) 83.49%)`,
-          borderRadius: '50%',
-          top: -30,
-          right: -180,
+          background:
+            "linear-gradient(210.04deg, rgba(255, 255, 255, 0.2) -50.94%, rgba(255, 255, 255, 0) 83.49%)",
+          borderRadius: "50%",
+          top: -85,
+          right: -95,
         },
-        '&:before': {
+        "&:before": {
           content: '""',
-          position: 'absolute',
+          position: "absolute",
           width: 210,
           height: 210,
-          background: `linear-gradient(140.9deg, ${berryTheme.primary.dark} -14.02%, rgba(144, 202, 249, 0) 77.58%)`,
-          borderRadius: '50%',
-          top: -160,
-          right: -130,
-        }
+          background:
+            "linear-gradient(140.9deg, rgba(255, 255, 255, 0.1) -14.02%, rgba(255, 255, 255, 0) 70.50%)",
+          borderRadius: "50%",
+          top: -125,
+          right: -15,
+        },
+        borderRadius: 3,
       }}
     >
-      <CardContent>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <CardContent sx={{ p: 2.25 }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <Box>
-            <Typography variant="h3" sx={{ fontWeight: 500, mt: 1 }}>
-              $500.00
-            </Typography>
-            <Typography variant="subtitle2" sx={{ opacity: 0.7, mt: 0.5 }}>
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: 400, mb: 0.75, opacity: 0.8 }}
+            >
               Total Earning
             </Typography>
+            <Typography variant="h3" sx={{ fontWeight: 600 }}>
+              $500.00
+            </Typography>
           </Box>
           <Avatar
             variant="rounded"
             sx={{
-              bgcolor: berryTheme.primary.dark,
-              mt: 1,
-              width: 44,
-              height: 44,
+              bgcolor: "rgba(255, 255, 255, 0.1)",
+              color: "inherit",
+              "& svg": { fontSize: "1.875rem" },
             }}
           >
-            <EarningIcon fontSize="inherit" />
+            <ShoppingBagIcon />
           </Avatar>
         </Box>
-      </CardContent>
-    </Card>
-  );
-};
-
-// Total Order Line Chart Card
-const TotalOrderLineChartCard = () => {
-  return (
-    <Card>
-      <CardContent sx={{ p: 2 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
-          <Typography variant="h4" sx={{ fontWeight: 500 }}>
-            $1800
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            mt: 1,
+          }}
+        >
+          <Typography variant="h6" sx={{ fontWeight: 400, opacity: 0.8 }}>
+            $42,148
           </Typography>
-          <Chip
-            variant="outlined"
-            size="small"
-            icon={<TrendingUpIcon />}
-            label="+16%"
-            sx={{
-              color: berryTheme.success.main,
-              borderColor: berryTheme.success.main,
-              bgcolor: berryTheme.success.light,
-            }}
-          />
-        </Box>
-        <Typography variant="subtitle2" color="textSecondary">
-          Total Order
-        </Typography>
-        <Box sx={{ mt: 2, display: 'flex', alignItems: 'center' }}>
-          <LinearProgress 
-            variant="determinate" 
-            value={70} 
-            sx={{ 
-              flexGrow: 1, 
-              height: 6, 
-              borderRadius: 5,
-              bgcolor: berryTheme.grey[200],
-              '& .MuiLinearProgress-bar': {
-                bgcolor: berryTheme.primary.main,
-                borderRadius: 5,
-              }
-            }} 
-          />
-          <Typography variant="body2" color="textSecondary" sx={{ ml: 1 }}>
-            70%
-          </Typography>
-        </Box>
-      </CardContent>
-    </Card>
-  );
-};
-
-// Total Growth Bar Chart
-const TotalGrowthBarChart = () => {
-  return (
-    <Card>
-      <CardHeader
-        avatar={
-          <Avatar sx={{ bgcolor: berryTheme.success.main }}>
-            <TrendingUpIcon />
-          </Avatar>
-        }
-        action={
-          <IconButton size="small">
+          <IconButton size="small" sx={{ color: "inherit", opacity: 0.6 }}>
             <MoreHorizIcon />
           </IconButton>
-        }
-        title={
-          <Typography variant="h6" component="div">
+        </Box>
+      </CardContent>
+    </Card>
+  );
+};
+
+// Total Order Card (Blue with Line Chart)
+const TotalOrderCard = () => {
+  return (
+    <Card sx={{ borderRadius: 3 }}>
+      <CardContent sx={{ p: 2.25 }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-start",
+            mb: 2,
+          }}
+        >
+          <Box>
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: 400, color: "text.secondary", mb: 0.75 }}
+            >
+              Total Order
+            </Typography>
+            <Typography
+              variant="h3"
+              sx={{ fontWeight: 600, color: "text.primary" }}
+            >
+              $961
+            </Typography>
+          </Box>
+          <Box sx={{ display: "flex", gap: 0.5 }}>
+            <Button
+              size="small"
+              variant="text"
+              sx={{ minWidth: "auto", p: 0.5, fontSize: "0.75rem" }}
+            >
+              Month
+            </Button>
+            <Button
+              size="small"
+              variant="contained"
+              sx={{ minWidth: "auto", p: 0.5, fontSize: "0.75rem" }}
+            >
+              Year
+            </Button>
+          </Box>
+        </Box>
+
+        {/* Simple Line Chart Representation */}
+        <Box sx={{ height: 120, position: "relative", mt: 2 }}>
+          <svg width="100%" height="100%" style={{ overflow: "visible" }}>
+            <path
+              d="M 0 80 Q 50 40 100 60 T 200 50 T 300 40 T 400 30"
+              stroke="#2196f3"
+              strokeWidth="3"
+              fill="none"
+              strokeLinecap="round"
+            />
+            <defs>
+              <linearGradient
+                id="chartGradient"
+                x1="0%"
+                y1="0%"
+                x2="0%"
+                y2="100%"
+              >
+                <stop offset="0%" stopColor="#2196f3" stopOpacity="0.3" />
+                <stop offset="100%" stopColor="#2196f3" stopOpacity="0" />
+              </linearGradient>
+            </defs>
+            <path
+              d="M 0 80 Q 50 40 100 60 T 200 50 T 300 40 T 400 30 L 400 120 L 0 120 Z"
+              fill="url(#chartGradient)"
+            />
+          </svg>
+        </Box>
+      </CardContent>
+    </Card>
+  );
+};
+
+// Total Income Card (Blue)
+const TotalIncomeCard = () => {
+  return (
+    <Card
+      sx={{
+        background: "linear-gradient(45deg, #2196f3 30%, #21cbf3 90%)",
+        color: "white",
+        borderRadius: 3,
+      }}
+    >
+      <CardContent sx={{ p: 2.25 }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Box>
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: 400, mb: 0.75, opacity: 0.9 }}
+            >
+              Total Income
+            </Typography>
+            <Typography variant="h3" sx={{ fontWeight: 600 }}>
+              $203k
+            </Typography>
+          </Box>
+          <Avatar
+            variant="rounded"
+            sx={{
+              bgcolor: "rgba(255, 255, 255, 0.1)",
+              color: "inherit",
+              "& svg": { fontSize: "1.875rem" },
+            }}
+          >
+            <DescriptionIcon />
+          </Avatar>
+        </Box>
+      </CardContent>
+    </Card>
+  );
+};
+
+// Total Growth Card with Bar Chart
+const TotalGrowthCard = () => {
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const data = [
+    { investment: 20, loss: 30, profit: 50, maintenance: 10 },
+    { investment: 40, loss: 20, profit: 80, maintenance: 15 },
+    { investment: 30, loss: 10, profit: 60, maintenance: 20 },
+    { investment: 35, loss: 15, profit: 70, maintenance: 12 },
+    { investment: 25, loss: 35, profit: 40, maintenance: 8 },
+    { investment: 45, loss: 25, profit: 90, maintenance: 18 },
+    { investment: 50, loss: 20, profit: 95, maintenance: 22 },
+    { investment: 15, loss: 40, profit: 30, maintenance: 5 },
+    { investment: 30, loss: 15, profit: 65, maintenance: 14 },
+    { investment: 40, loss: 20, profit: 75, maintenance: 16 },
+    { investment: 20, loss: 30, profit: 45, maintenance: 10 },
+    { investment: 35, loss: 25, profit: 80, maintenance: 20 },
+  ];
+
+  return (
+    <Card sx={{ borderRadius: 3 }}>
+      <CardContent>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            mb: 2,
+          }}
+        >
+          <Typography variant="h6" sx={{ fontWeight: 600 }}>
             Total Growth
           </Typography>
-        }
-        subheader="Company Finance Growth"
-      />
-      <CardContent>
-        <Typography variant="h3" sx={{ fontWeight: 500, mb: 1 }}>
+          <Button
+            size="small"
+            variant="outlined"
+            sx={{ textTransform: "none" }}
+          >
+            Today
+          </Button>
+        </Box>
+
+        <Typography variant="h3" sx={{ fontWeight: 600, mb: 3 }}>
           $2,324.00
         </Typography>
-        <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-          <ArrowUpwardIcon sx={{ color: berryTheme.success.main, fontSize: 16, mr: 0.5 }} />
-          <Typography variant="body2" sx={{ color: berryTheme.success.main, mr: 1 }}>
-            +5.25%
-          </Typography>
-          <Typography variant="body2" color="textSecondary">
-            than last week
-          </Typography>
+
+        {/* Bar Chart */}
+        <Box sx={{ height: 200, mb: 2 }}>
+          <svg width="100%" height="100%">
+            {data.map((item, index) => {
+              const x = (index * 100) / (data.length - 1);
+              const totalHeight =
+                item.investment + item.loss + item.profit + item.maintenance;
+              const scale = 150 / 100; // Max height scaling
+
+              return (
+                <g key={index}>
+                  {/* Investment (Light Blue) */}
+                  <rect
+                    x={`${x}%`}
+                    y={200 - item.investment * scale}
+                    width="6%"
+                    height={item.investment * scale}
+                    fill="#81c784"
+                    rx="1"
+                  />
+                  {/* Loss (Dark Blue) */}
+                  <rect
+                    x={`${x}%`}
+                    y={200 - (item.investment + item.loss) * scale}
+                    width="6%"
+                    height={item.loss * scale}
+                    fill="#2196f3"
+                    rx="1"
+                  />
+                  {/* Profit (Purple) */}
+                  <rect
+                    x={`${x}%`}
+                    y={
+                      200 - (item.investment + item.loss + item.profit) * scale
+                    }
+                    width="6%"
+                    height={item.profit * scale}
+                    fill="#673ab7"
+                    rx="1"
+                  />
+                  {/* Maintenance (Light Purple) */}
+                  <rect
+                    x={`${x}%`}
+                    y={200 - totalHeight * scale}
+                    width="6%"
+                    height={item.maintenance * scale}
+                    fill="#e1bee7"
+                    rx="1"
+                  />
+                </g>
+              );
+            })}
+          </svg>
         </Box>
-        <LinearProgress 
-          variant="determinate" 
-          value={85} 
-          sx={{ 
-            height: 8, 
-            borderRadius: 5,
-            bgcolor: berryTheme.success.light,
-            '& .MuiLinearProgress-bar': {
-              bgcolor: berryTheme.success.main,
-              borderRadius: 5,
-            }
-          }} 
-        />
+
+        {/* Chart Legend */}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            gap: 3,
+            flexWrap: "wrap",
+          }}
+        >
+          <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+            <Box
+              sx={{
+                width: 12,
+                height: 12,
+                bgcolor: "#81c784",
+                borderRadius: 0.5,
+              }}
+            />
+            <Typography variant="caption">Investment</Typography>
+          </Box>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+            <Box
+              sx={{
+                width: 12,
+                height: 12,
+                bgcolor: "#2196f3",
+                borderRadius: 0.5,
+              }}
+            />
+            <Typography variant="caption">Loss</Typography>
+          </Box>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+            <Box
+              sx={{
+                width: 12,
+                height: 12,
+                bgcolor: "#673ab7",
+                borderRadius: 0.5,
+              }}
+            />
+            <Typography variant="caption">Profit</Typography>
+          </Box>
+          <Box sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+            <Box
+              sx={{
+                width: 12,
+                height: 12,
+                bgcolor: "#e1bee7",
+                borderRadius: 0.5,
+              }}
+            />
+            <Typography variant="caption">Maintenance</Typography>
+          </Box>
+        </Box>
       </CardContent>
     </Card>
   );
 };
 
-// Popular Card
-const PopularCard = () => {
-  const popularStocks = [
-    { name: 'Bajaj Finsery', category: 'BAJAJFINSV.NS', price: 1541.15, change: +39.00, isUp: true },
-    { name: 'TTML', category: 'TATAPOWER.NS', price: 11.61, change: -0.58, isUp: false },
-    { name: 'Reliance', category: 'RELIANCE.NS', price: 2032.95, change: +44.44, isUp: true },
-    { name: 'TTML', category: 'TTML.NS', price: 307.65, change: -3.82, isUp: false },
-    { name: 'Stolon', category: 'STOLON.NS', price: 18.20, change: +10.00, isUp: true },
+// Popular Stocks Card
+const PopularStocksCard = () => {
+  const stocks = [
+    {
+      name: "Bajaj Finery",
+      code: "BAJAJFINSV.NS",
+      price: 1839.0,
+      change: 10,
+      profit: true,
+    },
+    { name: "TTML", code: "TTML.NS", price: 100.0, change: 10, profit: false },
+    {
+      name: "Reliance",
+      code: "RELIANCE.NS",
+      price: 200.0,
+      change: 10,
+      profit: true,
+    },
+    { name: "TTML", code: "TTML.NS", price: 189.0, change: 10, profit: false },
+    {
+      name: "Stolon",
+      code: "STOLON.NS",
+      price: 189.0,
+      change: 10,
+      profit: false,
+    },
   ];
 
   return (
-    <Card>
-      <CardHeader
-        title={
-          <Typography variant="h6" component="div">
+    <Card sx={{ borderRadius: 3 }}>
+      <CardContent>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            mb: 2,
+          }}
+        >
+          <Typography variant="h6" sx={{ fontWeight: 600 }}>
             Popular Stocks
           </Typography>
-        }
-        action={
           <IconButton size="small">
             <MoreHorizIcon />
           </IconButton>
-        }
-      />
-      <CardContent sx={{ p: 0 }}>
-        <List sx={{ p: 0 }}>
-          {popularStocks.map((stock, index) => (
-            <React.Fragment key={index}>
-              <ListItem sx={{ px: 2, py: 1 }}>
-                <ListItemAvatar>
-                  <Avatar
-                    sx={{
-                      bgcolor: stock.isUp ? berryTheme.success.light : berryTheme.error.light,
-                      color: stock.isUp ? berryTheme.success.main : berryTheme.error.main,
-                      width: 32,
-                      height: 32,
-                    }}
-                  >
-                    {stock.isUp ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText
-                  primary={
-                    <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
-                      {stock.name}
-                    </Typography>
-                  }
-                  secondary={
-                    <Typography variant="caption" color="textSecondary">
-                      {stock.category}
-                    </Typography>
-                  }
-                />
-                <ListItemSecondaryAction>
-                  <Box sx={{ textAlign: 'right' }}>
-                    <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
-                      ${stock.price}
-                    </Typography>
-                    <Typography
-                      variant="caption"
-                      sx={{
-                        color: stock.isUp ? berryTheme.success.main : berryTheme.error.main,
-                        fontWeight: 500,
-                      }}
-                    >
-                      {stock.isUp ? '+' : ''}{stock.change}%
-                    </Typography>
-                  </Box>
-                </ListItemSecondaryAction>
-              </ListItem>
-              {index < popularStocks.length - 1 && <Divider />}
-            </React.Fragment>
-          ))}
-        </List>
-      </CardContent>
-    </Card>
-  );
-};
+        </Box>
 
-// Total Revenue Card
-const TotalRevenueCard = () => {
-  return (
-    <Card>
-      <CardContent>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-          <Box>
-            <Typography variant="h6" sx={{ fontWeight: 500, mb: 0.5 }}>
-              Total Revenue
-            </Typography>
-            <Typography variant="h3" sx={{ fontWeight: 500, mb: 1 }}>
-              $42,562
-            </Typography>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <Chip
-                size="small"
-                icon={<ArrowUpwardIcon />}
-                label="$1,12,900 (40.5%)"
-                sx={{
-                  color: berryTheme.success.main,
-                  bgcolor: berryTheme.success.light,
-                  border: 'none',
-                  '& .MuiChip-icon': {
-                    color: berryTheme.success.main,
-                  },
-                }}
-              />
-            </Box>
-          </Box>
-          <Avatar
-            variant="rounded"
+        {/* Featured Stock with Chart */}
+        <Box sx={{ mb: 3, p: 2, bgcolor: "#f5f5f5", borderRadius: 2 }}>
+          <Box
             sx={{
-              bgcolor: berryTheme.warning.light,
-              color: berryTheme.warning.main,
-              width: 44,
-              height: 44,
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              mb: 2,
             }}
           >
-            <MoneyIcon />
-          </Avatar>
-        </Box>
-      </CardContent>
-    </Card>
-  );
-};
-
-// Account Balance Card
-const AccountBalanceCard = () => {
-  return (
-    <Card>
-      <CardContent>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-          <Box>
-            <Typography variant="h6" sx={{ fontWeight: 500, mb: 0.5 }}>
-              Account Balance
-            </Typography>
-            <Typography variant="h3" sx={{ fontWeight: 500, mb: 1 }}>
-              $23,045
-            </Typography>
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-              <Chip
-                size="small"
-                icon={<ArrowDownwardIcon />}
-                label="$1,456 (30.5%)"
-                sx={{
-                  color: berryTheme.error.main,
-                  bgcolor: berryTheme.error.light,
-                  border: 'none',
-                  '& .MuiChip-icon': {
-                    color: berryTheme.error.main,
-                  },
-                }}
-              />
-            </Box>
-          </Box>
-          <Avatar
-            variant="rounded"
-            sx={{
-              bgcolor: berryTheme.secondary.light,
-              color: berryTheme.secondary.main,
-              width: 44,
-              height: 44,
-            }}
-          >
-            <AccountIcon />
-          </Avatar>
-        </Box>
-      </CardContent>
-    </Card>
-  );
-};
-
-// Sales Report Card
-const SalesReportCard = () => {
-  const salesData = [
-    { period: 'This Week', amount: '$1,235', change: '+2.5%', isUp: true },
-    { period: 'Last Week', amount: '$1,005', change: '-1.5%', isUp: false },
-    { period: 'This Month', amount: '$5,657', change: '+5.2%', isUp: true },
-    { period: 'Last Month', amount: '$4,998', change: '+1.8%', isUp: true },
-  ];
-
-  return (
-    <Card>
-      <CardHeader
-        title={
-          <Typography variant="h6" component="div">
-            Sales Report
-          </Typography>
-        }
-        subheader="Current month vs previous month"
-        action={
-          <IconButton size="small">
-            <MoreHorizIcon />
-          </IconButton>
-        }
-      />
-      <CardContent>
-        <Grid container spacing={2}>
-          {salesData.map((item, index) => (
-            <Grid item xs={12} sm={6} key={index}>
-              <Box
-                sx={{
-                  p: 2,
-                  borderRadius: 1,
-                  bgcolor: berryTheme.grey[50],
-                  border: `1px solid ${berryTheme.grey[200]}`,
-                }}
+            <Box>
+              <Typography variant="subtitle1" sx={{ fontWeight: 600 }}>
+                Bajaj Finery
+              </Typography>
+              <Typography
+                variant="body2"
+                sx={{ color: berryColors.success.main, fontWeight: 500 }}
               >
-                <Typography variant="body2" color="textSecondary" sx={{ mb: 0.5 }}>
-                  {item.period}
-                </Typography>
-                <Typography variant="h6" sx={{ fontWeight: 500, mb: 0.5 }}>
-                  {item.amount}
-                </Typography>
-                <Typography
-                  variant="caption"
+                10% Profit
+              </Typography>
+            </Box>
+            <Typography variant="h6" sx={{ fontWeight: 600 }}>
+              $1839.00
+            </Typography>
+          </Box>
+
+          {/* Mini Chart */}
+          <Box sx={{ height: 60 }}>
+            <svg width="100%" height="100%">
+              <path
+                d="M 0 40 Q 30 20 60 30 T 120 25 T 180 20 T 240 15 T 300 10"
+                stroke="#673ab7"
+                strokeWidth="2"
+                fill="none"
+                strokeLinecap="round"
+              />
+              <defs>
+                <linearGradient
+                  id="stockGradient"
+                  x1="0%"
+                  y1="0%"
+                  x2="0%"
+                  y2="100%"
+                >
+                  <stop offset="0%" stopColor="#673ab7" stopOpacity="0.3" />
+                  <stop offset="100%" stopColor="#673ab7" stopOpacity="0" />
+                </linearGradient>
+              </defs>
+              <path
+                d="M 0 40 Q 30 20 60 30 T 120 25 T 180 20 T 240 15 T 300 10 L 300 60 L 0 60 Z"
+                fill="url(#stockGradient)"
+              />
+            </svg>
+          </Box>
+        </Box>
+
+        {/* Stock List */}
+        <List sx={{ p: 0 }}>
+          {stocks.map((stock, index) => (
+            <ListItem key={index} sx={{ px: 0, py: 1 }}>
+              <ListItemAvatar>
+                <Avatar
                   sx={{
-                    color: item.isUp ? berryTheme.success.main : berryTheme.error.main,
-                    fontWeight: 500,
+                    bgcolor: stock.profit
+                      ? berryColors.success.light
+                      : berryColors.error.light,
+                    color: stock.profit
+                      ? berryColors.success.main
+                      : berryColors.error.main,
+                    width: 32,
+                    height: 32,
                   }}
                 >
-                  {item.change}
+                  {stock.profit ? (
+                    <TrendingUpIcon fontSize="small" />
+                  ) : (
+                    <TrendingDownIcon fontSize="small" />
+                  )}
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                primary={
+                  <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
+                    {stock.name}
+                  </Typography>
+                }
+                secondary={
+                  <Typography
+                    variant="caption"
+                    sx={{
+                      color: stock.profit
+                        ? berryColors.success.main
+                        : berryColors.error.main,
+                    }}
+                  >
+                    {stock.change}% {stock.profit ? "Profit" : "loss"}
+                  </Typography>
+                }
+              />
+              <ListItemSecondaryAction>
+                <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+                  ${stock.price.toFixed(2)}
                 </Typography>
-              </Box>
-            </Grid>
+              </ListItemSecondaryAction>
+            </ListItem>
           ))}
-        </Grid>
-      </CardContent>
-    </Card>
-  );
-};
+        </List>
 
-// Latest Customers Card
-const LatestCustomersCard = () => {
-  const customers = [
-    { name: 'John Doe', email: 'john@example.com', amount: '$1,200', status: 'Paid', avatar: 'J' },
-    { name: 'Jane Smith', email: 'jane@example.com', amount: '$850', status: 'Pending', avatar: 'J' },
-    { name: 'Mike Johnson', email: 'mike@example.com', amount: '$2,100', status: 'Paid', avatar: 'M' },
-    { name: 'Sarah Wilson', email: 'sarah@example.com', amount: '$750', status: 'Cancelled', avatar: 'S' },
-  ];
-
-  const getStatusColor = (status) => {
-    switch (status) {
-      case 'Paid': return berryTheme.success.main;
-      case 'Pending': return berryTheme.warning.main;
-      case 'Cancelled': return berryTheme.error.main;
-      default: return berryTheme.grey[500];
-    }
-  };
-
-  return (
-    <Card>
-      <CardHeader
-        title={
-          <Typography variant="h6" component="div">
-            Latest Customers
-          </Typography>
-        }
-        action={
-          <Button size="small" color="primary">
-            View All
+        <Box sx={{ textAlign: "center", mt: 2 }}>
+          <Button variant="text" size="small" sx={{ textTransform: "none" }}>
+            View All →
           </Button>
-        }
-      />
-      <CardContent sx={{ p: 0 }}>
-        <TableContainer>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Customer</TableCell>
-                <TableCell>Amount</TableCell>
-                <TableCell>Status</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {customers.map((customer, index) => (
-                <TableRow key={index}>
-                  <TableCell>
-                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                      <Avatar
-                        sx={{
-                          bgcolor: berryTheme.primary.main,
-                          width: 32,
-                          height: 32,
-                          fontSize: '0.875rem',
-                          mr: 2,
-                        }}
-                      >
-                        {customer.avatar}
-                      </Avatar>
-                      <Box>
-                        <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
-                          {customer.name}
-                        </Typography>
-                        <Typography variant="caption" color="textSecondary">
-                          {customer.email}
-                        </Typography>
-                      </Box>
-                    </Box>
-                  </TableCell>
-                  <TableCell>
-                    <Typography variant="subtitle2" sx={{ fontWeight: 500 }}>
-                      {customer.amount}
-                    </Typography>
-                  </TableCell>
-                  <TableCell>
-                    <Chip
-                      label={customer.status}
-                      size="small"
-                      sx={{
-                        bgcolor: `${getStatusColor(customer.status)}20`,
-                        color: getStatusColor(customer.status),
-                        fontWeight: 500,
-                      }}
-                    />
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        </Box>
       </CardContent>
     </Card>
   );
 };
 
-// Main Dashboard Component (Berry Exact Replica)
+// Main Dashboard Component
 const Dashboard = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Simulate loading
-    setTimeout(() => setLoading(false), 1000);
-  }, []);
-
-  if (loading) {
-    return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-        <Typography>Loading Berry Dashboard...</Typography>
-      </Box>
-    );
-  }
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   return (
-    <Box sx={{ flexGrow: 1, p: { xs: 2, sm: 3 } }}>
-      {/* First Row - Main Cards */}
-      <Grid container spacing={3} sx={{ mb: 3 }}>
-        <Grid item xs={12} sm={6} md={4} lg={3}>
-          <EarningCard />
-        </Grid>
-        <Grid item xs={12} sm={6} md={4} lg={3}>
-          <TotalOrderLineChartCard />
-        </Grid>
-        <Grid item xs={12} sm={6} md={4} lg={3}>
-          <TotalRevenueCard />
-        </Grid>
-        <Grid item xs={12} sm={6} md={4} lg={3}>
-          <AccountBalanceCard />
-        </Grid>
-      </Grid>
-
-      {/* Second Row - Growth and Popular */}
-      <Grid container spacing={3} sx={{ mb: 3 }}>
-        <Grid item xs={12} lg={4}>
-          <TotalGrowthBarChart />
-        </Grid>
-        <Grid item xs={12} lg={8}>
-          <PopularCard />
-        </Grid>
-      </Grid>
-
-      {/* Third Row - Sales Report and Latest Customers */}
+    <Box
+      sx={{
+        flexGrow: 1,
+        p: { xs: 2, sm: 3 },
+        minHeight: "calc(100vh - 70px)",
+        bgcolor: "#f5f5f5",
+      }}
+    >
       <Grid container spacing={3}>
-        <Grid item xs={12} lg={8}>
-          <LatestCustomersCard />
+        {/* First Row - Main Cards */}
+        {/* <Grid item xs={12} sm={6} md={4}>
+          <TotalEarningCard />
+        </Grid> */}
+        <Grid item xs={12} sm={6} md={4}>
+          <TotalOrderCard />
         </Grid>
-        <Grid item xs={12} lg={4}>
-          <SalesReportCard />
+        <Grid item xs={12} sm={6} md={4}>
+          <TotalOrderCard />
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <TotalOrderCard />
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <TotalOrderCard />
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <TotalOrderCard />
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <TotalIncomeCard />
+        </Grid>
+
+        {/* Second Row - Growth Chart and Popular Stocks */}
+        <Grid item xs={12} md={8}>
+          <TotalGrowthCard />
+        </Grid>
+        <Grid item xs={12} md={4}>
+          <PopularStocksCard />
         </Grid>
       </Grid>
     </Box>

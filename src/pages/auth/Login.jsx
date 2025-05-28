@@ -196,7 +196,7 @@ const Login = () => {
                     width: 8,
                     height: 8,
                     borderRadius: '50%',
-                    bgcolor: theme.palette.features.secure,
+                    // bgcolor: theme.palette.features.secure,
                     mt: 0.75,
                     mr: 3,
                     flexShrink: 0,

@@ -17,7 +17,7 @@ import MainLayout from "./components/layout/MainLayout";
 import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
 import Dashboard from "./pages/dashboard/Dashboard";
-// import Profile from "./pages/profile/Profile";
+import Profile from "./pages/profile/Profile";
 import ProfileCompletion from "./pages/profile/ProfileCompletion";
 // import Settings from "./pages/settings/Settings";
 import NotFound from "./pages/NotFound";
@@ -48,6 +48,7 @@ function App() {
                     <Routes>
                       <Route path="/dashboard" element={<Dashboard />} />
                       <Route path="/products" element={<Products />} />
+                       <Route path="/profile" element={<Profile />} />
                       {/* <Route path="/profile" element={<Profile />} />
                       <Route path="/products/new" element={<AddProduct />} />
                       <Route path="/products/:id" element={<ProductDetails />} />

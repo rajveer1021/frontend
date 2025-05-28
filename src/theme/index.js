@@ -1,148 +1,148 @@
 import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 
-// Define base theme with dark color scheme matching the reference images
+// Define Berry theme to match the exact colors from the template
 let theme = createTheme({
   palette: {
     primary: {
-      main: "#1F2937", // Dark navy/black from the images
-      light: "#374151",
-      dark: "#111827",
+      main: "#2196f3", // Berry primary blue
+      light: "#64b5f6",
+      dark: "#1976d2",
       contrastText: "#FFFFFF",
     },
     secondary: {
-      main: "#6B7280", // Gray from the images
-      light: "#9CA3AF",
-      dark: "#4B5563",
+      main: "#9c27b0", // Berry secondary purple
+      light: "#ba68c8",
+      dark: "#7b1fa2",
       contrastText: "#FFFFFF",
     },
     error: {
-      main: "#EF4444",
-      light: "#F87171",
-      dark: "#DC2626",
+      main: "#f44336",
+      light: "#e57373",
+      dark: "#d32f2f",
     },
     warning: {
-      main: "#F59E0B",
-      light: "#FCD34D",
-      dark: "#D97706",
+      main: "#ff9800",
+      light: "#ffb74d",
+      dark: "#f57c00",
     },
     info: {
-      main: "#3B82F6",
-      light: "#93C5FD",
-      dark: "#1D4ED8",
+      main: "#2196f3",
+      light: "#64b5f6",
+      dark: "#1976d2",
     },
     success: {
-      main: "#10B981",
-      light: "#6EE7B7",
-      dark: "#059669",
+      main: "#4caf50",
+      light: "#81c784",
+      dark: "#388e3c",
     },
     text: {
-      primary: "#1F2937",
-      secondary: "#6B7280",
-      disabled: "#9CA3AF",
+      primary: "#212121",
+      secondary: "#757575",
+      disabled: "#bdbdbd",
     },
-    divider: "#E5E7EB",
+    divider: "#e0e0e0",
     background: {
-      default: "#F9FAFB",
-      paper: "#FFFFFF",
-      auth: "#E5E7EB", // Light purple/gray background from images
+      default: "#f5f5f5", // Berry light gray background
+      paper: "#ffffff",
     },
     action: {
       active: "rgba(0, 0, 0, 0.54)",
-      hover: "rgba(31, 41, 55, 0.04)",
-      selected: "rgba(31, 41, 55, 0.08)",
+      hover: "rgba(0, 0, 0, 0.04)",
+      selected: "rgba(33, 150, 243, 0.08)", // Berry primary with opacity
       disabled: "rgba(0, 0, 0, 0.26)",
       disabledBackground: "rgba(0, 0, 0, 0.12)",
     },
-    // Custom colors for the marketplace features
-    features: {
-      verified: "#3B82F6", // Blue for verified vendors
-      secure: "#10B981", // Green for secure transactions
-      global: "#8B5CF6", // Purple for global reach
+    // Custom Berry colors
+    berry: {
+      primary: "#2196f3",
+      secondary: "#9c27b0",
+      success: "#4caf50",
+      warning: "#ff9800",
+      error: "#f44336",
+      grey: {
+        50: "#fafafa",
+        100: "#f5f5f5",
+        200: "#eeeeee",
+        300: "#e0e0e0",
+        400: "#bdbdbd",
+        500: "#9e9e9e",
+        600: "#757575",
+        700: "#616161",
+        800: "#424242",
+        900: "#212121",
+      }
     },
   },
   typography: {
-    fontFamily: '"Inter", "Roboto", "Helvetica", "Arial", sans-serif',
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
     h1: {
       fontWeight: 700,
-      fontSize: "2.5rem",
-      lineHeight: 1.2,
-      color: "#1F2937",
+      fontSize: "2.125rem",
+      lineHeight: 1.235,
     },
     h2: {
       fontWeight: 700,
-      fontSize: "2rem",
-      lineHeight: 1.2,
-      color: "#1F2937",
+      fontSize: "1.5rem",
+      lineHeight: 1.334,
     },
     h3: {
-      fontWeight: 700,
-      fontSize: "1.75rem",
-      lineHeight: 1.3,
-      color: "#1F2937",
+      fontWeight: 600,
+      fontSize: "1.25rem",
+      lineHeight: 1.6,
     },
     h4: {
-      fontWeight: 700,
-      fontSize: "1.5rem",
-      lineHeight: 1.3,
-      color: "#1F2937",
+      fontWeight: 600,
+      fontSize: "1.125rem",
+      lineHeight: 1.5,
     },
     h5: {
       fontWeight: 600,
-      fontSize: "1.25rem",
-      lineHeight: 1.4,
-      color: "#1F2937",
+      fontSize: "1rem",
+      lineHeight: 1.5,
     },
     h6: {
       fontWeight: 600,
-      fontSize: "1.125rem",
-      lineHeight: 1.4,
-      color: "#1F2937",
+      fontSize: "0.875rem",
+      lineHeight: 1.57,
     },
     subtitle1: {
       fontWeight: 500,
       fontSize: "1rem",
-      lineHeight: 1.5,
-      color: "#6B7280",
+      lineHeight: 1.75,
     },
     subtitle2: {
       fontWeight: 500,
       fontSize: "0.875rem",
-      lineHeight: 1.5,
-      color: "#6B7280",
+      lineHeight: 1.57,
     },
     body1: {
-      fontSize: "1rem",
-      lineHeight: 1.5,
-      color: "#1F2937",
+      fontSize: "0.875rem",
+      lineHeight: 1.43,
     },
     body2: {
-      fontSize: "0.875rem",
-      lineHeight: 1.5,
-      color: "#6B7280",
+      fontSize: "0.75rem",
+      lineHeight: 1.66,
     },
     button: {
       textTransform: "none",
-      fontWeight: 600,
-      fontSize: "0.875rem",
+      fontWeight: 500,
     },
     caption: {
       fontSize: "0.75rem",
-      lineHeight: 1.5,
-      color: "#6B7280",
+      lineHeight: 1.66,
     },
   },
   shape: {
-    borderRadius: 8,
+    borderRadius: 12, // Berry uses more rounded corners
   },
   spacing: 8,
   shadows: [
     "none",
-    "0px 1px 3px rgba(0, 0, 0, 0.1)",
-    "0px 1px 5px rgba(0, 0, 0, 0.1)",
-    "0px 2px 8px rgba(0, 0, 0, 0.1)",
-    "0px 4px 12px rgba(0, 0, 0, 0.1)",
-    "0px 8px 20px rgba(0, 0, 0, 0.1)",
-    // Additional shadows...
+    "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+    "0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12)",
+    "0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12)",
+    "0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)",
+    "0px 3px 5px -1px rgba(0,0,0,0.2),0px 5px 8px 0px rgba(0,0,0,0.14),0px 1px 14px 0px rgba(0,0,0,0.12)",
     "0px 3px 5px -1px rgba(0,0,0,0.2),0px 6px 10px 0px rgba(0,0,0,0.14),0px 1px 18px 0px rgba(0,0,0,0.12)",
     "0px 4px 5px -2px rgba(0,0,0,0.2),0px 7px 10px 1px rgba(0,0,0,0.14),0px 2px 16px 1px rgba(0,0,0,0.12)",
     "0px 5px 5px -3px rgba(0,0,0,0.2),0px 8px 10px 1px rgba(0,0,0,0.14),0px 3px 14px 2px rgba(0,0,0,0.12)",
@@ -189,31 +189,22 @@ let theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: 8,
-          padding: "12px 24px",
+          padding: "8px 16px",
           boxShadow: "none",
-          fontWeight: 600,
+          fontWeight: 500,
           textTransform: "none",
           fontSize: "0.875rem",
-          "&:hover": {
-            boxShadow: "0px 2px 8px rgba(31, 41, 55, 0.2)",
-          },
         },
         contained: {
-          boxShadow: "none",
-          backgroundColor: "#1F2937",
+          boxShadow: "0px 2px 4px rgba(33, 150, 243, 0.3)",
           "&:hover": {
-            backgroundColor: "#111827",
-            boxShadow: "0px 4px 12px rgba(31, 41, 55, 0.3)",
+            boxShadow: "0px 4px 8px rgba(33, 150, 243, 0.4)",
           },
         },
         outlined: {
           borderWidth: "1px",
-          borderColor: "#E5E7EB",
-          color: "#6B7280",
           "&:hover": {
             borderWidth: "1px",
-            borderColor: "#1F2937",
-            backgroundColor: "rgba(31, 41, 55, 0.04)",
           },
         },
       },
@@ -222,9 +213,18 @@ let theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: 12,
-          boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.1)",
-          border: "1px solid #E5E7EB",
-          overflow: "visible",
+          boxShadow: "0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12)",
+          border: "1px solid #e0e0e0",
+        },
+      },
+    },
+    MuiCardContent: {
+      styleOverrides: {
+        root: {
+          padding: "20px",
+          "&:last-child": {
+            paddingBottom: "20px",
+          },
         },
       },
     },
@@ -233,28 +233,47 @@ let theme = createTheme({
         root: {
           "& .MuiOutlinedInput-root": {
             borderRadius: 8,
-            backgroundColor: "#FFFFFF",
             "&:hover .MuiOutlinedInput-notchedOutline": {
-              borderColor: "#1F2937",
+              borderColor: "#2196f3",
             },
             "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-              borderColor: "#1F2937",
+              borderColor: "#2196f3",
               borderWidth: 2,
             },
-          },
-          "& .MuiOutlinedInput-input": {
-            padding: "14px 16px",
           },
         },
       },
     },
-    MuiFormLabel: {
+    MuiAppBar: {
       styleOverrides: {
         root: {
-          color: "#374151",
-          fontWeight: 500,
-          "&.Mui-focused": {
-            color: "#1F2937",
+          backgroundColor: "#ffffff",
+          color: "#212121",
+          boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+        },
+      },
+    },
+    MuiDrawer: {
+      styleOverrides: {
+        paper: {
+          backgroundColor: "#ffffff",
+          borderRight: "1px solid #e0e0e0",
+        },
+      },
+    },
+    MuiListItemButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: 8,
+          margin: "0 8px 4px 8px",
+          "&:hover": {
+            backgroundColor: "rgba(33, 150, 243, 0.08)",
+          },
+          "&.Mui-selected": {
+            backgroundColor: "rgba(33, 150, 243, 0.15)",
+            "&:hover": {
+              backgroundColor: "rgba(33, 150, 243, 0.2)",
+            },
           },
         },
       },
@@ -263,48 +282,38 @@ let theme = createTheme({
       styleOverrides: {
         root: {
           borderRadius: 16,
-          fontWeight: 600,
+          fontWeight: 500,
           fontSize: "0.75rem",
-          height: 24,
         },
         colorSuccess: {
-          backgroundColor: "#D1FAE5",
-          color: "#065F46",
+          backgroundColor: "#e8f5e8",
+          color: "#1b5e20",
         },
         colorWarning: {
-          backgroundColor: "#FEF3C7",
-          color: "#92400E",
+          backgroundColor: "#fff8e1",
+          color: "#e65100",
         },
         colorError: {
-          backgroundColor: "#FEE2E2",
-          color: "#991B1B",
+          backgroundColor: "#ffebee",
+          color: "#b71c1c",
         },
       },
     },
-    MuiAppBar: {
+    MuiLinearProgress: {
       styleOverrides: {
         root: {
-          backgroundColor: "#FFFFFF",
-          color: "#1F2937",
-          boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.1)",
+          borderRadius: 4,
+          backgroundColor: "#eeeeee",
+        },
+        bar: {
+          borderRadius: 4,
         },
       },
     },
-    MuiDrawer: {
-      styleOverrides: {
-        paper: {
-          backgroundColor: "#FFFFFF",
-          borderRight: "1px solid #E5E7EB",
-        },
-      },
-    },
-    MuiRadio: {
+    MuiAvatar: {
       styleOverrides: {
         root: {
-          color: "#6B7280",
-          "&.Mui-checked": {
-            color: "#1F2937",
-          },
+          fontWeight: 600,
         },
       },
     },

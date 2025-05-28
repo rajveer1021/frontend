@@ -16,7 +16,6 @@ import {
   Avatar,
   Menu,
   MenuItem,
-  Container,
   Collapse,
   ListItemButton,
 } from '@mui/material';
@@ -146,7 +145,7 @@ const MainLayout = ({ children }) => {
               mx: 1,
               mb: 0.5,
               '&:hover': {
-                bgcolor: 'rgba(94, 72, 232, 0.08)',
+                bgcolor: 'rgba(25, 118, 210, 0.08)',
               },
             }}
           >
@@ -197,12 +196,12 @@ const MainLayout = ({ children }) => {
                       mx: 1,
                       mb: 0.5,
                       '&:hover': {
-                        bgcolor: 'rgba(94, 72, 232, 0.08)',
+                        bgcolor: 'rgba(25, 118, 210, 0.08)',
                       },
                       '&.Mui-selected': {
-                        bgcolor: 'rgba(94, 72, 232, 0.15)',
+                        bgcolor: 'rgba(25, 118, 210, 0.15)',
                         '&:hover': {
-                          bgcolor: 'rgba(94, 72, 232, 0.2)',
+                          bgcolor: 'rgba(25, 118, 210, 0.2)',
                         },
                       },
                     }}
@@ -240,14 +239,14 @@ const MainLayout = ({ children }) => {
           mx: 1,
           mb: 0.5,
           '&:hover': {
-            bgcolor: 'rgba(94, 72, 232, 0.08)',
+            bgcolor: 'rgba(25, 118, 210, 0.08)',
           },
           '&.Mui-selected': {
-            bgcolor: 'rgba(94, 72, 232, 0.15)',
+            bgcolor: 'rgba(25, 118, 210, 0.15)',
             borderLeft: '3px solid',
             borderLeftColor: 'primary.main',
             '&:hover': {
-              bgcolor: 'rgba(94, 72, 232, 0.2)',
+              bgcolor: 'rgba(25, 118, 210, 0.2)',
             },
           },
         }}
@@ -303,7 +302,7 @@ const MainLayout = ({ children }) => {
               fontSize: '1.25rem',
             }}
           >
-            Marketplace
+            Berry
           </Typography>
         ) : (
           <Box
@@ -320,7 +319,7 @@ const MainLayout = ({ children }) => {
               fontSize: '1.2rem',
             }}
           >
-            M
+            B
           </Box>
         )}
       </Box>
@@ -439,7 +438,7 @@ const MainLayout = ({ children }) => {
             {drawerOpen && !isMobile ? <ChevronLeftIcon /> : <MenuIcon />}
           </IconButton>
 
-          {/* Page Title - will be dynamic */}
+          {/* Page Title */}
           <Typography
             variant="h6"
             noWrap
@@ -450,7 +449,7 @@ const MainLayout = ({ children }) => {
               fontSize: '1.125rem',
             }}
           >
-            {/* This will be set by each page */}
+            Dashboard
           </Typography>
 
           {/* User Menu */}
@@ -572,7 +571,7 @@ const MainLayout = ({ children }) => {
             lg: `calc(100% - ${drawerOpen ? DRAWER_WIDTH : MINI_DRAWER_WIDTH}px)`
           },
           minHeight: '100vh',
-          bgcolor: 'grey.50',
+          bgcolor: '#f5f5f5',
           transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,
@@ -582,24 +581,11 @@ const MainLayout = ({ children }) => {
         {/* Content Wrapper with proper spacing */}
         <Box
           sx={{
-            pt: `${HEADER_HEIGHT + 16}px`, // Header height + padding
-            pb: 2,
+            pt: `${HEADER_HEIGHT}px`, // Header height
             minHeight: '100vh',
           }}
         >
-          {/* Page Container - This is key for proper dashboard card layout */}
-          <Container
-            maxWidth={false}
-            sx={{
-              px: { xs: 2, sm: 3, lg: 4 },
-              maxWidth: 'none',
-              '& .MuiContainer-root': {
-                px: 0,
-              },
-            }}
-          >
-            {children}
-          </Container>
+          {children}
         </Box>
       </Box>
     </Box>
