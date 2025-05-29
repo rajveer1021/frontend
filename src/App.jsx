@@ -19,7 +19,7 @@ import Signup from "./pages/auth/Signup";
 import Dashboard from "./pages/dashboard/Dashboard";
 import Profile from "./pages/profile/Profile";
 import ProfileCompletion from "./pages/profile/ProfileCompletion";
-// import Settings from "./pages/settings/Settings";
+import Settings from "./pages/settings/Settings";
 import NotFound from "./pages/NotFound";
 
 import theme from "./theme";
@@ -49,11 +49,12 @@ function App() {
                       <Route path="/dashboard" element={<Dashboard />} />
                       <Route path="/products" element={<Products />} />
                        <Route path="/profile" element={<Profile />} />
+                       <Route path="/settings" element={<Settings />} />
                       {/* <Route path="/profile" element={<Profile />} />
                       <Route path="/products/new" element={<AddProduct />} />
                       <Route path="/products/:id" element={<ProductDetails />} />
                       <Route path="/products/:id/edit" element={<ProductDetails />} />
-                      <Route path="/settings" element={<Settings />} /> */}
+                       */}
                       
                       {/* Default Route */}
                       <Route path="/" element={<Navigate to="/dashboard" replace />} />

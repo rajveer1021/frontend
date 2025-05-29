@@ -6,7 +6,7 @@ import {
   Typography,
   Drawer,
   List,
-  ListItem,
+  ListItemButton,
   ListItemIcon,
   ListItemText,
   IconButton,
@@ -17,7 +17,10 @@ import {
   Menu,
   MenuItem,
   Collapse,
-  ListItemButton,
+  Badge,
+  InputBase,
+  Card,
+  alpha,
 } from '@mui/material';
 import {
   Menu as MenuIcon,
@@ -29,6 +32,13 @@ import {
   ChevronLeft as ChevronLeftIcon,
   ExpandLess,
   ExpandMore,
+  Search as SearchIcon,
+  Notifications as NotificationsIcon,
+  MoreVert as MoreVertIcon,
+  Home as HomeIcon,
+  Assignment as AssignmentIcon,
+  Description as DescriptionIcon,
+  Person as PersonIcon,
 } from '@mui/icons-material';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
@@ -51,48 +61,69 @@ const MainLayout = ({ children }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [productMenuOpen, setProductMenuOpen] = useState(false);
 
-  // Menu items with better organization
+  // Menu items - Berry style organization
   const menuItems = [
     {
       id: 'dashboard',
       title: 'Dashboard',
-      type: 'item',
-      icon: DashboardIcon,
-      url: '/dashboard'
-    },
-    {
-      id: 'products',
-      title: 'Products',
-      type: 'collapse',
-      icon: ProductsIcon,
+      type: 'group',
       children: [
         {
-          id: 'product-list',
-          title: 'All Products',
+          id: 'default',
+          title: 'Dashboard',
           type: 'item',
-          url: '/products'
-        },
-        {
-          id: 'add-product',
-          title: 'Add Product',
-          type: 'item',
-          url: '/products/new'
+          icon: DashboardIcon,
+          url: '/dashboard'
         }
       ]
     },
     {
-      id: 'profile',
-      title: 'Profile',
-      type: 'item',
-      icon: ProfileIcon,
-      url: '/profile'
+      id: 'application',
+      title: 'Application',
+      type: 'group',
+      children: [
+        {
+          id: 'products',
+          title: 'Products',
+          type: 'collapse',
+          icon: ProductsIcon,
+          children: [
+            {
+              id: 'product-list',
+              title: 'All Products',
+              type: 'item',
+              url: '/products'
+            },
+            {
+              id: 'add-product',
+              title: 'Add Product',
+              type: 'item',
+              url: '/products/new'
+            }
+          ]
+        },
+        {
+          id: 'profile',
+          title: 'Profile',
+          type: 'item',
+          icon: ProfileIcon,
+          url: '/profile'
+        }
+      ]
     },
     {
-      id: 'settings',
-      title: 'Settings',
-      type: 'item',
-      icon: SettingsIcon,
-      url: '/settings'
+      id: 'pages',
+      title: 'Pages',
+      type: 'group',
+      children: [
+        {
+          id: 'settings',
+          title: 'Settings',
+          type: 'item',
+          icon: SettingsIcon,
+          url: '/settings'
+        }
+      ]
     }
   ];
 
@@ -126,6 +157,34 @@ const MainLayout = ({ children }) => {
     return location.pathname === url || location.pathname.startsWith(url + '/');
   };
 
+  // Render menu group
+  const renderMenuGroup = (group) => {
+    return (
+      <Box key={group.id} sx={{ mb: 1 }}>
+        {drawerOpen && (
+          <Typography
+            variant="caption"
+            sx={{
+              px: 3,
+              py: 1,
+              display: 'block',
+              color: 'text.secondary',
+              fontWeight: 600,
+              textTransform: 'uppercase',
+              fontSize: '0.75rem',
+              letterSpacing: '0.5px'
+            }}
+          >
+            {group.title}
+          </Typography>
+        )}
+        <List sx={{ py: 0 }}>
+          {group.children?.map(renderMenuItem)}
+        </List>
+      </Box>
+    );
+  };
+
   // Render menu item
   const renderMenuItem = (item) => {
     if (item.type === 'collapse') {
@@ -138,26 +197,25 @@ const MainLayout = ({ children }) => {
               }
             }}
             sx={{
-              minHeight: 48,
+              minHeight: 44,
               px: 2.5,
               py: 1,
-              borderRadius: 1,
-              mx: 1,
+              borderRadius: '12px',
+              mx: 1.5,
               mb: 0.5,
               '&:hover': {
-                bgcolor: 'rgba(25, 118, 210, 0.08)',
+                bgcolor: alpha(theme.palette.primary.main, 0.08),
               },
             }}
           >
             <ListItemIcon
               sx={{
-                minWidth: 0,
-                mr: drawerOpen ? 2 : 'auto',
-                justifyContent: 'center',
+                minWidth: 36,
                 color: 'text.secondary',
+                '& svg': { fontSize: '1.25rem' }
               }}
             >
-              <item.icon fontSize="small" />
+              <item.icon />
             </ListItemIcon>
             {drawerOpen && (
               <>
@@ -167,6 +225,7 @@ const MainLayout = ({ children }) => {
                     '& .MuiListItemText-primary': {
                       fontSize: '0.875rem',
                       fontWeight: 500,
+                      color: 'text.primary'
                     },
                   }}
                 />
@@ -188,20 +247,21 @@ const MainLayout = ({ children }) => {
                     selected={isActive(child.url)}
                     onClick={isMobile ? handleDrawerToggle : undefined}
                     sx={{
-                      minHeight: 40,
+                      minHeight: 36,
                       px: 2.5,
                       py: 0.5,
-                      pl: 5,
-                      borderRadius: 1,
-                      mx: 1,
+                      pl: 5.5,
+                      borderRadius: '12px',
+                      mx: 1.5,
                       mb: 0.5,
                       '&:hover': {
-                        bgcolor: 'rgba(25, 118, 210, 0.08)',
+                        bgcolor: alpha(theme.palette.primary.main, 0.08),
                       },
                       '&.Mui-selected': {
-                        bgcolor: 'rgba(25, 118, 210, 0.15)',
+                        bgcolor: alpha(theme.palette.primary.main, 0.12),
+                        color: 'primary.main',
                         '&:hover': {
-                          bgcolor: 'rgba(25, 118, 210, 0.2)',
+                          bgcolor: alpha(theme.palette.primary.main, 0.16),
                         },
                       },
                     }}
@@ -210,7 +270,7 @@ const MainLayout = ({ children }) => {
                       primary={child.title}
                       sx={{
                         '& .MuiListItemText-primary': {
-                          fontSize: '0.8rem',
+                          fontSize: '0.8125rem',
                           fontWeight: isActive(child.url) ? 600 : 400,
                         },
                       }}
@@ -232,34 +292,35 @@ const MainLayout = ({ children }) => {
         selected={isActive(item.url)}
         onClick={isMobile ? handleDrawerToggle : undefined}
         sx={{
-          minHeight: 48,
+          minHeight: 44,
           px: 2.5,
           py: 1,
-          borderRadius: 1,
-          mx: 1,
+          borderRadius: '12px',
+          mx: 1.5,
           mb: 0.5,
           '&:hover': {
-            bgcolor: 'rgba(25, 118, 210, 0.08)',
+            bgcolor: alpha(theme.palette.primary.main, 0.08),
           },
           '&.Mui-selected': {
-            bgcolor: 'rgba(25, 118, 210, 0.15)',
-            borderLeft: '3px solid',
-            borderLeftColor: 'primary.main',
+            bgcolor: 'primary.main',
+            color: 'white',
+            '& .MuiListItemIcon-root': {
+              color: 'white',
+            },
             '&:hover': {
-              bgcolor: 'rgba(25, 118, 210, 0.2)',
+              bgcolor: 'primary.dark',
             },
           },
         }}
       >
         <ListItemIcon
           sx={{
-            minWidth: 0,
-            mr: drawerOpen ? 2 : 'auto',
-            justifyContent: 'center',
-            color: isActive(item.url) ? 'primary.main' : 'text.secondary',
+            minWidth: 36,
+            color: isActive(item.url) ? 'inherit' : 'text.secondary',
+            '& svg': { fontSize: '1.25rem' }
           }}
         >
-          <item.icon fontSize="small" />
+          <item.icon />
         </ListItemIcon>
         {drawerOpen && (
           <ListItemText
@@ -268,7 +329,6 @@ const MainLayout = ({ children }) => {
               '& .MuiListItemText-primary': {
                 fontSize: '0.875rem',
                 fontWeight: isActive(item.url) ? 600 : 500,
-                color: isActive(item.url) ? 'primary.main' : 'text.primary',
               },
             }}
           />
@@ -286,37 +346,54 @@ const MainLayout = ({ children }) => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: drawerOpen ? 'flex-start' : 'center',
-          px: drawerOpen ? 2 : 1,
-          py: 2,
+          px: drawerOpen ? 3 : 2,
+          py: 2.5,
           minHeight: HEADER_HEIGHT,
-          borderBottom: '1px solid',
-          borderColor: 'divider',
         }}
       >
         {drawerOpen ? (
-          <Typography
-            variant="h6"
-            sx={{
-              fontWeight: 700,
-              color: 'primary.main',
-              fontSize: '1.25rem',
-            }}
-          >
-            Berry
-          </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Box
+              sx={{
+                width: 32,
+                height: 32,
+                bgcolor: 'primary.main',
+                borderRadius: 2,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: 'white',
+                fontWeight: 700,
+                fontSize: '1.1rem',
+                mr: 1.5,
+              }}
+            >
+              B
+            </Box>
+            <Typography
+              variant="h6"
+              sx={{
+                fontWeight: 700,
+                color: 'primary.main',
+                fontSize: '1.25rem',
+              }}
+            >
+              Berry
+            </Typography>
+          </Box>
         ) : (
           <Box
             sx={{
               width: 32,
               height: 32,
               bgcolor: 'primary.main',
-              borderRadius: 1,
+              borderRadius: 2,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               color: 'white',
               fontWeight: 700,
-              fontSize: '1.2rem',
+              fontSize: '1.1rem',
             }}
           >
             B
@@ -324,76 +401,77 @@ const MainLayout = ({ children }) => {
         )}
       </Box>
 
+      <Divider />
+
       {/* Navigation Menu */}
-      <Box sx={{ flexGrow: 1, overflowY: 'auto', py: 1 }}>
-        <List disablePadding>
-          {menuItems.map(renderMenuItem)}
-        </List>
+      <Box sx={{ flexGrow: 1, overflowY: 'auto', py: 2 }}>
+        {menuItems.map(renderMenuGroup)}
       </Box>
 
+      <Divider />
+
       {/* User Profile Section */}
-      <Box
-        sx={{
-          borderTop: '1px solid',
-          borderColor: 'divider',
-          p: 1.5,
-        }}
-      >
+      <Box sx={{ p: 2 }}>
         {drawerOpen ? (
-          <Box
+          <Card
             sx={{
-              display: 'flex',
-              alignItems: 'center',
-              p: 1,
-              borderRadius: 1,
-              bgcolor: 'grey.50',
+              p: 2,
+              bgcolor: alpha(theme.palette.primary.main, 0.08),
+              border: `1px solid ${alpha(theme.palette.primary.main, 0.2)}`,
             }}
           >
-            <Avatar
-              sx={{
-                bgcolor: 'primary.main',
-                width: 32,
-                height: 32,
-                fontSize: '0.875rem',
-              }}
-            >
-              {getInitials(user?.name || 'User')}
-            </Avatar>
-            <Box sx={{ ml: 1.5, flexGrow: 1, minWidth: 0 }}>
-              <Typography
-                variant="subtitle2"
+            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+              <Avatar
                 sx={{
-                  fontWeight: 600,
+                  bgcolor: 'primary.main',
+                  width: 40,
+                  height: 40,
                   fontSize: '0.875rem',
-                  lineHeight: 1.2,
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap',
                 }}
               >
-                {user?.name || 'User Name'}
-              </Typography>
-              <Typography
-                variant="caption"
-                color="text.secondary"
-                sx={{ fontSize: '0.75rem' }}
-              >
-                {user?.role || 'User'}
-              </Typography>
+                {getInitials(user?.name || 'User')}
+              </Avatar>
+              <Box sx={{ ml: 1.5, flexGrow: 1, minWidth: 0 }}>
+                <Typography
+                  variant="subtitle2"
+                  sx={{
+                    fontWeight: 600,
+                    fontSize: '0.875rem',
+                    lineHeight: 1.2,
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  {user?.name || 'User Name'}
+                </Typography>
+                <Typography
+                  variant="caption"
+                  color="text.secondary"
+                  sx={{ fontSize: '0.75rem' }}
+                >
+                  {user?.role || 'User'}
+                </Typography>
+              </Box>
+              <IconButton size="small" onClick={handleProfileMenuOpen}>
+                <MoreVertIcon fontSize="small" />
+              </IconButton>
             </Box>
-          </Box>
+          </Card>
         ) : (
           <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Avatar
-              sx={{
-                bgcolor: 'primary.main',
-                width: 32,
-                height: 32,
-                fontSize: '0.875rem',
-              }}
-            >
-              {getInitials(user?.name || 'User')}
-            </Avatar>
+            <IconButton onClick={handleProfileMenuOpen}>
+              <Avatar
+                sx={{
+                  bgcolor: 'primary.main',
+                  width: 32,
+                  height: 32,
+                  fontSize: '0.875rem',
+                }}
+              >
+                {getInitials(user?.name || 'User')}
+              </Avatar>
+            </IconButton>
           </Box>
         )}
       </Box>
@@ -412,13 +490,13 @@ const MainLayout = ({ children }) => {
           bgcolor: 'background.paper',
           borderBottom: '1px solid',
           borderColor: 'divider',
-          boxShadow: '0px 1px 3px rgba(0, 0, 0, 0.1)',
+          boxShadow: '0px 1px 4px rgba(0, 0, 0, 0.05)',
         }}
       >
         <Toolbar
           sx={{
             minHeight: `${HEADER_HEIGHT}px !important`,
-            px: { xs: 1, sm: 2 },
+            px: { xs: 2, sm: 3 },
           }}
         >
           {/* Menu Toggle */}
@@ -431,47 +509,72 @@ const MainLayout = ({ children }) => {
               mr: 2,
               color: 'text.primary',
               '&:hover': {
-                bgcolor: 'rgba(0, 0, 0, 0.04)',
+                bgcolor: alpha(theme.palette.primary.main, 0.08),
               },
             }}
           >
             {drawerOpen && !isMobile ? <ChevronLeftIcon /> : <MenuIcon />}
           </IconButton>
 
-          {/* Page Title */}
-          <Typography
-            variant="h6"
-            noWrap
+          {/* Search Box */}
+          <Box
             sx={{
-              flexGrow: 1,
-              fontWeight: 600,
-              color: 'text.primary',
-              fontSize: '1.125rem',
+              display: { xs: 'none', sm: 'flex' },
+              alignItems: 'center',
+              bgcolor: alpha(theme.palette.common.black, 0.04),
+              borderRadius: 2,
+              px: 2,
+              py: 0.5,
+              mr: 2,
+              minWidth: 200,
             }}
           >
-            Dashboard
-          </Typography>
+            <SearchIcon sx={{ color: 'text.secondary', mr: 1 }} />
+            <InputBase
+              placeholder="Search…"
+              sx={{ color: 'text.primary', fontSize: '0.875rem' }}
+            />
+          </Box>
 
-          {/* User Menu */}
-          <IconButton
-            onClick={handleProfileMenuOpen}
-            sx={{
-              '&:hover': {
-                bgcolor: 'rgba(0, 0, 0, 0.04)',
-              },
-            }}
-          >
-            <Avatar
+          <Box sx={{ flexGrow: 1 }} />
+
+          {/* Header Actions */}
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <IconButton
+              color="inherit"
               sx={{
-                bgcolor: 'primary.main',
-                width: 36,
-                height: 36,
-                fontSize: '0.875rem',
+                color: 'text.secondary',
+                '&:hover': {
+                  bgcolor: alpha(theme.palette.primary.main, 0.08),
+                },
               }}
             >
-              {getInitials(user?.name || 'User')}
-            </Avatar>
-          </IconButton>
+              <Badge badgeContent={2} color="error">
+                <NotificationsIcon />
+              </Badge>
+            </IconButton>
+
+            {/* User Menu */}
+            <IconButton
+              onClick={handleProfileMenuOpen}
+              sx={{
+                '&:hover': {
+                  bgcolor: alpha(theme.palette.primary.main, 0.08),
+                },
+              }}
+            >
+              <Avatar
+                sx={{
+                  bgcolor: 'primary.main',
+                  width: 36,
+                  height: 36,
+                  fontSize: '0.875rem',
+                }}
+              >
+                {getInitials(user?.name || 'User')}
+              </Avatar>
+            </IconButton>
+          </Box>
 
           <Menu
             anchorEl={anchorEl}
@@ -483,10 +586,15 @@ const MainLayout = ({ children }) => {
               elevation: 8,
               sx: {
                 mt: 1,
-                minWidth: 180,
-                borderRadius: 2,
+                minWidth: 200,
+                borderRadius: 3,
                 border: '1px solid',
                 borderColor: 'divider',
+                '& .MuiMenuItem-root': {
+                  px: 2,
+                  py: 1.5,
+                  fontSize: '0.875rem',
+                },
               },
             }}
           >
@@ -495,7 +603,6 @@ const MainLayout = ({ children }) => {
                 navigate('/profile');
                 handleProfileMenuClose();
               }}
-              sx={{ py: 1.5, px: 2 }}
             >
               <ProfileIcon sx={{ mr: 1.5, fontSize: 20 }} />
               Profile
@@ -503,7 +610,7 @@ const MainLayout = ({ children }) => {
             <Divider />
             <MenuItem
               onClick={handleLogout}
-              sx={{ py: 1.5, px: 2, color: 'error.main' }}
+              sx={{ color: 'error.main' }}
             >
               <LogoutIcon sx={{ mr: 1.5, fontSize: 20 }} />
               Logout
@@ -571,7 +678,7 @@ const MainLayout = ({ children }) => {
             lg: `calc(100% - ${drawerOpen ? DRAWER_WIDTH : MINI_DRAWER_WIDTH}px)`
           },
           minHeight: '100vh',
-          bgcolor: '#f5f5f5',
+          bgcolor: '#fafafa',
           transition: theme.transitions.create('width', {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,
@@ -581,7 +688,7 @@ const MainLayout = ({ children }) => {
         {/* Content Wrapper with proper spacing */}
         <Box
           sx={{
-            pt: `${HEADER_HEIGHT}px`, // Header height
+            pt: `${HEADER_HEIGHT}px`,
             minHeight: '100vh',
           }}
         >
